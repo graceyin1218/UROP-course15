@@ -1,0 +1,71 @@
+1. for iOS + google, identify subset of field names that are consistent
+	EMAIL
+
+2. when they started collecting the data for these field names
+
+3. REVIEWS (All reviews)
+
+	table-like : app id + review id. then review text (maybe rating)
+
+
+
+Android:
+
+
+
+
+
+
+
+
+
+iOS:
+
+{ key: '_id', value: 1283816001, shared: true }
+{ key: 'app_name', value: 1283816001, shared: true }
+{ key: 'app_id', value: 1283816001, shared: true }
+{ key: 'seller', value: 1283816001, shared: true }
+{ key: 'size', value: 1283816001, shared: true }
+{ key: 'timestamp', value: 1283816001, shared: true }
+{ key: 'price', value: 1283816001, shared: true }
+{ key: 'categories', value: 1283816001, shared: true }
+
+[ { key: '_id', value: 1283816001, shared: true },
+  { key: 'customersAlsoBoughtApps',
+    value: 1283816001,
+    shared: false },
+  { key: 'app_name', value: 1283816001, shared: false },
+  { key: 'isGameCenter', value: 1426927038, shared: false },
+  { key: 'ratingCountList', value: 1283816001, shared: false },
+  { key: 'app_id', value: 1283816001, shared: true },
+  { key: 'releaseDate', value: 1283816011, shared: false },
+  { key: 'moreByThisDeveloper', value: 1426927038, shared: false },
+  { key: 'bundleId', value: 1426927038, shared: false },
+  { key: 'requirements', value: 1359768766, shared: false },
+  { key: 'copyright', value: 1426927038, shared: false },
+  { key: 'supportsPassbook', value: 1426927038, shared: false },
+  { key: 'supportUrl', value: 1359768766, shared: false },
+  { key: 'hasInAppPurchases', value: 1426927038, shared: false },
+  { key: 'seller', value: 1283816001, shared: true },
+  { key: 'languages', value: 1359768766, shared: false },
+  { key: 'version', value: 1426927038, shared: false },
+  { key: 'artist_id', value: 1359768766, shared: false },
+  { key: 'size', value: 1283816001, shared: false },
+  { key: 'deviceFamilies', value: 1426927038, shared: false },
+  { key: 'description', value: 1359768766, shared: false },
+  { key: 'timestamp', value: 1283816001, shared: true },
+  { key: 'price', value: 1283816001, shared: true },
+  { key: 'SCRAPER_VERSION', value: 1426927038, shared: false },
+  { key: 'ratingCountList_current',
+    value: 1283816001,
+    shared: false },
+  { key: 'totalNumberOfReviews_current',
+    value: 1283816001,
+    shared: false },
+  { key: 'addOns', value: 1359768769, shared: false },
+  { key: 'requiredCapabilities', value: 1426927038, shared: false },
+  { key: 'categories', value: 1283816001, shared: true },
+  { key: 'ageRecommendation', value: 1426927038, shared: false },
+  { key: 'totalNumberOfReviews', value: 1283816001, shared: false },
+  { key: 'websiteUrl', value: 1359768767, shared: false },
+  { key: 'artistName', value: 1359768766, shared: false } ]
