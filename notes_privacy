@@ -1,0 +1,69 @@
+
+ios: total 568,082,642
+
+every 100,000 th document.... gives us around 5700 documents.
+
+Split into three files: ios_permissions, ios_no_permissions, ios
+
+Also, get mean/median stats for price, rating, timestamp  for each table.
+
+- hasInAppPurchases
+- supportsPassbook
+
+- app_name
+- price (has a $ in front of the number..)
+- timestamp
+- ratingCountList (5 elements) (sometimes null)
+
+
+
+
+android: total 772,441,534
+
+every 100,000 th document.... gives us around 7700 documents.
+
+Split into three files: android_permissions, android_no_permissions, android
+
+Also, get mean/median stats for price, rating, timestamp  for each table.
+
+Field names:
+- privacy_policy
+
+- app_name
+- price
+- timestamp
+- ratings (5 elements) (unlikely to be null, but just to be safe...)
+
+
+
+
+
+
+
+
+google_play.main_sql
+
+permission1 -> permission10
+
+"Market billing service" -> allows user to purchase items through Market from within this application.
+
+
+
+
+
+
+
+
+*** Does fs.appendFileSync(...) create a new line??? ***
+
+
+
+
+
+
+
+Email Tucker about using NodeJS 1. for performance (send her benchmark blog http://karlheinzniebuhr.github.io/en/2015/09/28/C-vs-Go-vs-pypy-vs-Python/ ). 2. because JSON/MongoDB data format is native to Javascript, and Python programs have to import a separate JSON interpreter. Also slows down.
+
+
+
+
