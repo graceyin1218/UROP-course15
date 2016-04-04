@@ -1,6 +1,7 @@
 var MongoClient = require("mongodb").MongoClient;
 //var fs = require("fs");
 var async = require("async");
+var stanforddb = require("./stanford-db.js");
 
 var totalDocs = 568082642 - 1;
 
@@ -26,7 +27,7 @@ var average_no_permissions = {
 var count;
 
 
-MongoClient.connect("mongodb://migmongo1.stanford.edu:27017/apple_ios", function(err, db)
+MongoClient.connect("mongodb://" + stanforddb.url + "/apple_ios", function(err, db)
 {
 	if (err)
 	{

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "https": "^1.0.0",
+    "marklogic": "^1.0.5",
+    "mongodb": "^2.1.14"
+  }
+}

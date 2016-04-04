@@ -1,4 +1,5 @@
 var MongoClient = require("mongodb").MongoClient;
+var stanforddb = require("./stanford-db.js");
 
 //var async = require("async");
 
@@ -11,7 +12,7 @@ var MongoClient = require("mongodb").MongoClient;
 // 	return false;
 // }
 
-MongoClient.connect("mongodb://migmongo1.stanford.edu:27017/apple_ios", function(err, db) 
+MongoClient.connect("mongodb://" + stanforddb.url + "/apple_ios", function(err, db)
 {
 	if (err)
 	{

@@ -1,5 +1,5 @@
 var MongoClient = require("mongodb").MongoClient;
-
+var stanforddb = require("./stanford-db.js");
 
 var fields;
 var count; 
@@ -29,7 +29,7 @@ var report = function() {
 			console.log("");
 };
 
-MongoClient.connect("mongodb://migmongo1.stanford.edu:27017/google_play", function(err, db) 
+MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err, db)
 {
 	if (err)
 	{
