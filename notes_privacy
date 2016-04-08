@@ -47,6 +47,8 @@ permission1 -> permission10
 
 "Market billing service" -> allows user to purchase items through Market from within this application.
 
+"Your accounts"/"discover known accounts"
+
 
 
 
@@ -63,6 +65,70 @@ permission1 -> permission10
 
 
 Email Tucker about using NodeJS 1. for performance (send her benchmark blog http://karlheinzniebuhr.github.io/en/2015/09/28/C-vs-Go-vs-pypy-vs-Python/ ). 2. because JSON/MongoDB data format is native to Javascript, and Python programs have to import a separate JSON interpreter. Also slows down.
+
+
+
+=====================================
+
+
+
+
+ios reviews info
+
+
+doc["feed"]["entry"]   ===> if no entry, then no reviews.
+
+
+0: app info
+
+im:name.label
+
+im:price.attributes.amount
+im:price.attributes.currency
+
+****  id.attributes.im:id
+
+
+
+1 and greater (as long as it has an "author"field):
+
+
+doc["feed"]["entry"][1]
+
+//author.name.label
+
+im:version.label
+
+im:rating.label
+
+****  id.label
+
+title.label
+
+content.label
+
+//link.attributes.href
+
+
+
+
+
+
+
+
+
+
+
+
+
+How to sort the database:::
+
+By app (include app name and app id)
+
+Then have a list of reviews
+
+
+
 
 
 
