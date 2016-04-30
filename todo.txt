@@ -15,7 +15,7 @@ Android:
 
 
 
-
+"TITLE: Network communication \n DESCRIPTION: full Internet access\n DESCRIPTION_FULL: Allows the app to create network sockets.\n"
 
 
 
