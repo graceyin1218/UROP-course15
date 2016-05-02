@@ -12,6 +12,9 @@ var stanforddb = require("./stanford-db.js");
 // });
 
 var count;
+var global_db;
+
+var callback_count = 0;
 
 MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err, db) {
 	if (err) {
@@ -19,10 +22,11 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
 		throw err;
 	}
 	console.log("connected to database");
-	var android = db.collection("main_sql");
+	global_db = db;
+  var android = db.collection("main_sql");
 	var reviews = db.collection("reviews");
 
-	var cursor = android.find({}, {"app_id":1, "appname":1, "_id":0}).limit(5);
+	var cursor = android.find({}, {"app_id":1, "appname":1, "_id":0}); //.limit(1);
 	count = 0;
 
 	cursor.each(function(err, doc) {
@@ -32,12 +36,14 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
 		}
 		if (err) {
 			console.log("ERROR");
-			db.close();
+			// Cannot close prematurely, because of stupid callbacks
+      //db.close();
 			throw err;
 		}
 		if (doc == null) {
 			console.log("\n\ndone\n\n");
-			db.close();
+			// Cannot close prematurely. Look above.
+      //db.close();
 			return;
 		}
 
@@ -51,6 +57,15 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
 		.end(function (result) {
   				//console.log(result.status, result.headers, result.body);
   				//console.log();
+          //
+
+          // quick way to tell if we are done with all the callbacks..
+          callback_count++;
+          if (callback_count % 10000 == 0) {
+              console.log("added " + callback_count + " docs");
+          }
+
+
   				for (var i = 0; i < result.body.length; i++) {
   					var res = result.body[i];
 					var newDoc = {
@@ -62,8 +77,16 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
   						"date": res["date"],
   						"dateIso": res["dateIso"]
   					};
-  					console.log(newDoc);
-  				}
+//  					console.log(newDoc);
+            reviews.insert(newDoc, function(err, records) {
+                if (err) throw err;
+                // do nothing
+            });
+          }
+
+          if (callback_count == 3296514) {
+              process.exit();
+          }
 
 		 });
 
@@ -73,14 +96,16 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
 
 process.on("SIGINT", function() {
 	console.log("\n\nCANCELLED PROCESS\n\n");
-	console.log("viewed " + (count-1) + " documents");
-	console.log('\n');
+	//console.log("viewed " + (count-1) + " documents");
+	//console.log('\n');
+  //global_db.close();
 });
 
 process.on("exit", function() {
 	console.log("\n\nCOMPLETED PROCESS\n\n");
 	console.log("viewed " + (count-1) + " documents");
 	console.log('\n');
+  global_db.close();
 });
 
 
