@@ -2,6 +2,7 @@
   "dependencies": {
     "async": "^2.0.0-rc.1",
     "fs": "0.0.2",
-    "mongodb": "~1.4.34"
+    "mongodb": "~1.4.34",
+    "unirest": "^0.4.2"
   }
 }
