@@ -26,12 +26,12 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
   var android = db.collection("main_sql");
 	var reviews = db.collection("reviews");
 
-	var cursor = android.find({}, {"app_id":1, "appname":1, "_id":0}); //.limit(1);
+	var cursor = android.find({}, {"app_id":1, "appname":1, "_id":0}).limit(25000); //.limit(1);
 	count = 0;
 
 	cursor.each(function(err, doc) {
 		count++;
-		if (count%1000 == 0) {
+		if (count%10000 == 0) {
 			console.log(count);
 		}
 		if (err) {
@@ -66,9 +66,12 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
           }
 
 
-  				for (var i = 0; i < result.body.length; i++) {
-  					var res = result.body[i];
-					var newDoc = {
+console.log(result.body);
+
+//  				for (var i = 0; i < result.body.length; i++) {
+          for (var i in result.body) {
+              var res = result.body[i];
+	    				var newDoc = {
   						"app_id": app_id,
   						"app_name": app_name,
   						"title": res["title"],
@@ -84,7 +87,7 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
             });
           }
 
-          if (callback_count == 3296514) {
+          if (callback_count == 25000) {    //3296514) {
               process.exit();
           }
 
