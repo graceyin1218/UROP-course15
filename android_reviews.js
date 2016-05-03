@@ -1,6 +1,7 @@
 var unirest = require("unirest");
 var MongoClient = require("mongodb").MongoClient;
 var stanforddb = require("./stanford-db.js");
+var request = require("sync-request");
 
 
 // These code snippets use an open-source library. http://unirest.io/nodejs
@@ -15,6 +16,11 @@ var count;
 var global_db;
 
 var callback_count = 0;
+
+
+
+
+
 
 MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err, db) {
 	if (err) {
@@ -50,47 +56,87 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
 		var app_id = doc["app_id"];
 		var app_name = doc["appname"];
 
-		// SCRAPE REVIEWS
-		unirest.get("https://gplaystore.p.mashape.com/applicationReviews?id=" + app_id + "&lang=en&page=2")
-		.header("X-Mashape-Key", "lCbaNKES1SmshAXGZwfFKIClgm7Tp1akcNVjsnvEiCJ9kN0S3H")
-		.header("Accept", "application/json")
-		.end(function (result) {
-  				//console.log(result.status, result.headers, result.body);
-  				//console.log();
-          //
+		// Synchronous HTTP request!!
 
-          // quick way to tell if we are done with all the callbacks..
-          callback_count++;
-          if (callback_count % 10000 == 0) {
-              console.log("added " + callback_count + " docs");
-          }
+		var res = request("GET", "https://gplaystore.p.mashape.com/applicationReviews?id=" + app_id + "&lang=en&page=2", {
+			headers: {
+				"X-Mashape-Key": "lCbaNKES1SmshAXGZwfFKIClgm7Tp1akcNVjsnvEiCJ9kN0S3H",
+				"Accept": "application/json"
+			}
+		});
+
+		//console.log(JSON.parse(res.body));
 
 
-  				for (var i = 0; i < result.body.length; i++) {
-  					var res = result.body[i];
-					var newDoc = {
-  						"app_id": app_id,
-  						"app_name": app_name,
-  						"title": res["title"],
-  						"body": res["body"],
-  						"rating": res["rating"],
-  						"date": res["date"],
-  						"dateIso": res["dateIso"]
-  					};
-//  					console.log(newDoc);
+  		for (var i = 0; i < res.body.length; i++) {
+  			var r = res.body[i];
+			var newDoc = {
+  				"app_id": app_id,
+  				"app_name": app_name,
+  				"title": r["title"],
+  				"body": r["body"],
+  				"rating": r["rating"],
+  				"date": r["date"],
+  				"dateIso": r["dateIso"]
+  			};
+//  		console.log(newDoc);
             reviews.insert(newDoc, function(err, records) {
                 if (err) throw err;
                 // do nothing
             });
-          }
+        }
 
-          if (callback_count == 3296514) {
-              process.exit();
-          }
+        if (callback_count == 3296514) {
+           process.exit();
+        }
 
-		 });
+		});
 
-	})
+
+
+// original asynchronous version. A lot has been copied and pasted from this.
+
+		// SCRAPE REVIEWS
+// 		unirest.get("https://gplaystore.p.mashape.com/applicationReviews?id=" + app_id + "&lang=en&page=2")
+// 		.header("X-Mashape-Key", "lCbaNKES1SmshAXGZwfFKIClgm7Tp1akcNVjsnvEiCJ9kN0S3H")
+// 		.header("Accept", "application/json")
+// 		.end(function (result) {
+//   				//console.log(result.status, result.headers, result.body);
+//   				//console.log();
+//           //
+
+//           // quick way to tell if we are done with all the callbacks..
+//           callback_count++;
+//           if (callback_count % 10000 == 0) {
+//               console.log("added " + callback_count + " docs");
+//           }
+
+
+//   				for (var i = 0; i < result.body.length; i++) {
+//   					var res = result.body[i];
+// 					var newDoc = {
+//   						"app_id": app_id,
+//   						"app_name": app_name,
+//   						"title": res["title"],
+//   						"body": res["body"],
+//   						"rating": res["rating"],
+//   						"date": res["date"],
+//   						"dateIso": res["dateIso"]
+//   					};
+// //  					console.log(newDoc);
+//             reviews.insert(newDoc, function(err, records) {
+//                 if (err) throw err;
+//                 // do nothing
+//             });
+//           }
+
+//           if (callback_count == 3296514) {
+//               process.exit();
+//           }
+
+// 		 });
+
+	// })
 });
 
 
@@ -99,6 +145,7 @@ process.on("SIGINT", function() {
 	//console.log("viewed " + (count-1) + " documents");
 	//console.log('\n');
   //global_db.close();
+  	process.exit(1);
 });
 
 process.on("exit", function() {
