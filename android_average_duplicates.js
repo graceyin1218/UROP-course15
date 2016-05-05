@@ -63,3 +63,15 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
 
 });
 
+process.on("exit", function() {
+  console.log("done");
+  average(app_ids);
+});
+
+process.on("SIGINT", functioN() {
+  process.exit();
+});
+
+
+
+
