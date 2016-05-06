@@ -17,6 +17,8 @@ var average = function(app_ids) {
 	console.log("Average number of duplicates: " + ans);
 };
 
+var app_ids;
+
 MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err, db) {
   if (err) {
     console.log("cannot connect");
@@ -30,7 +32,7 @@ MongoClient.connect("mongodb://" + stanforddb.url + "/google_play", function(err
 
   //var numIDs = cursor.count();
 
-  var app_ids = {};
+  app_ids = {};
 
   var count = 0;
   cursor.each(function(err, doc) {
@@ -68,7 +70,7 @@ process.on("exit", function() {
   average(app_ids);
 });
 
-process.on("SIGINT", functioN() {
+process.on("SIGINT", function() {
   process.exit();
 });
 
