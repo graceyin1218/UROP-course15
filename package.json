@@ -3,6 +3,7 @@
     "async": "^2.0.0-rc.1",
     "fs": "0.0.2",
     "mongodb": "~1.4.34",
+    "sleep": "^3.0.1",
     "sync-request": "^3.0.1",
     "unirest": "^0.4.2"
   }
